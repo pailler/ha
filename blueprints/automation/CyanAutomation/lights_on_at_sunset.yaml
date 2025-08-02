@@ -1,0 +1,55 @@
+blueprint:
+  name: Lights On At Sunset
+  description: Turn on the following lights at sunset
+  domain: automation
+  input:
+    target_light:
+      name: Lights
+      description: This is the light (or lights) that will be activated at sunset
+      selector:
+        target:
+          entity:
+            domain: light
+    target_brightness:
+      name: Brightness
+      description: Brightness of the light(s) when they're activated
+      default: 50
+      selector:
+        number:
+          min: 5.0
+          max: 100.0
+          mode: slider
+          step: 5.0
+          unit_of_measurement: '%'
+    elevation_shift:
+      name: Elevation Shift
+      description: Using an elevation offset (height of sun relative to the horizon)
+        to shift the sunset trigger, either earlier or later. Positive values bring
+        the automation start time forward, whilst negative values delay the start
+        time. To approximate Golden Hour - set the Elevation Offset to 1.
+      default: 0.0
+      selector:
+        number:
+          min: -3.0
+          max: 3.0
+          mode: slider
+          step: 1.0
+  source_url: https://gist.github.com/CyanAutomation/1b8bafd033f73e3c24e42e8f381ff906
+mode: single
+variables:
+  target_brightness: !input 'target_brightness'
+  target_light: !input 'target_light'
+trigger:
+  platform: numeric_state
+  entity_id: sun.sun
+  attribute: elevation
+  below: !input 'elevation_shift'
+condition:
+  condition: sun
+  after: sunrise
+  after_offset: 01:00:00
+action:
+- service: light.turn_on
+  target: !input 'target_light'
+  data_template:
+    brightness_pct: '{{ target_brightness | int }}'

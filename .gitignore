@@ -1,0 +1,75 @@
+# Fichiers de configuration sensibles
+configuration.yaml
+secrets.yaml
+
+# Logs et fichiers temporaires
+*.log
+*.log.*
+*.log.txt
+*.log.fault
+
+# Bases de données
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+
+# Stockage Home Assistant
+.storage/
+.cloud/
+
+# Composants personnalisés (générés automatiquement)
+custom_components/
+
+# Configurations ESPHome
+esphome/
+
+# Fichiers web statiques
+www/
+
+# Images et médias
+image/
+
+# Dépendances Python
+deps/
+
+# Configuration Zigbee2MQTT
+zigbee2mqtt/
+
+# Fichiers SSH
+.ssh/
+id_rsa*
+
+# Fichiers de cache Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Fichiers temporaires
+*.tmp
+*.temp
+
+# Fichiers de version
+.HA_VERSION
+
+# Fichiers de configuration VS Code
+config.code-workspace
+
+# Fichiers de rapport
+watchman_report.txt
+
+# Fichiers de configuration système
+options.xml
+ip_bans.yaml
+known_devices.yaml
+zwscene.xml
+pyozw.sqlite
+
+# Fichiers de configuration Node-RED
+node-red/
+
+# Fichiers de configuration Glances
+glances/
+
+# Fichiers de configuration Dwains Dashboard
+dwains-dashboard/ 
