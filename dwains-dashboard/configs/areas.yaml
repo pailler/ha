@@ -1,0 +1,8 @@
+chambre:
+  icon: mdi:blinds-vertical-closed
+  floor: ''
+  disabled: false
+cuisine:
+  disabled: false
+  floor: ''
+  icon: mdi:air-conditioner
