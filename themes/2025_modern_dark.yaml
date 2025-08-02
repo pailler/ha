@@ -1,0 +1,44 @@
+2025_modern_dark:
+  # Fond général
+  background-color: "#0e0e11"
+  primary-background-color: "#0e0e11"
+  secondary-background-color: "#1c1c22"
+
+  # Cartes
+  card-background-color: "#1a1b1f"
+  paper-card-background-color: "#1a1b1f"
+  ha-card-background: "#1a1b1f"
+
+  # Couleurs principales
+  primary-color: "#5e9cff"  # bleu moderne
+  accent-color: "#ff6d6d"   # rouge corail
+  light-primary-color: "#7ab8ff"
+
+  # Texte
+  primary-text-color: "#ffffff"
+  secondary-text-color: "#c7c7c7"
+  text-primary-color: "#ffffff"
+
+  # Titres & barres
+  app-header-background-color: "#15161a"
+  app-header-text-color: "#ffffff"
+  sidebar-background-color: "#15161a"
+  sidebar-text-color: "#b0b0b0"
+  sidebar-selected-text-color: "#5e9cff"
+
+  # Icônes & sliders
+  paper-item-icon-color: "#b0b0b0"
+  paper-item-icon-active-color: "#5e9cff"
+  slider-color: "#5e9cff"
+  slider-secondary-color: "#ffffff"
+
+  # États
+  state-icon-color: "#5e9cff"
+  state-icon-active-color: "#ff6d6d"
+  state-on-color: "#5e9cff"
+  state-off-color: "#666"
+
+  # Autres
+  switch-checked-color: "#5e9cff"
+  switch-unchecked-button-color: "#444"
+  switch-unchecked-track-color: "#666"

@@ -1,0 +1,36 @@
+2025_modern_light:
+  background-color: "#f5f6fa"
+  primary-background-color: "#f5f6fa"
+  secondary-background-color: "#ffffff"
+
+  card-background-color: "#ffffff"
+  paper-card-background-color: "#ffffff"
+  ha-card-background: "#ffffff"
+
+  primary-color: "#1976d2"
+  accent-color: "#e53935"
+  light-primary-color: "#42a5f5"
+
+  primary-text-color: "#2e2e2e"
+  secondary-text-color: "#4a4a4a"
+  text-primary-color: "#2e2e2e"
+
+  app-header-background-color: "#ffffff"
+  app-header-text-color: "#2e2e2e"
+  sidebar-background-color: "#ffffff"
+  sidebar-text-color: "#2e2e2e"
+  sidebar-selected-text-color: "#1976d2"
+
+  paper-item-icon-color: "#757575"
+  paper-item-icon-active-color: "#1976d2"
+  slider-color: "#1976d2"
+  slider-secondary-color: "#cccccc"
+
+  state-icon-color: "#1976d2"
+  state-icon-active-color: "#e53935"
+  state-on-color: "#1976d2"
+  state-off-color: "#a0a0a0"
+
+  switch-checked-color: "#1976d2"
+  switch-unchecked-button-color: "#ccc"
+  switch-unchecked-track-color: "#eee"
