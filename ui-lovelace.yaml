@@ -1,0 +1,138 @@
+
+views:
+  - title: Accueil Invité
+    path: invite
+    icon: mdi:account-heart
+title: Accueil Invité
+icon: mdi:account-heart
+path: invite
+theme: ios-light-mode
+type: custom:grid-layout
+layout:
+  grid-template-columns: 1fr 1fr 1fr
+  grid-template-rows: auto
+  grid-gap: 16px
+
+cards:
+  - type: vertical-stack
+    cards:
+      - type: markdown
+        content: |
+          ## 👋 Bienvenue chez nous !
+          **Heure actuelle :** `[[[ return new Date().toLocaleTimeString() ]]]`
+
+      - type: picture
+        image: /local/images/logo_maison.png
+        aspect_ratio: 16x9
+
+      - type: entities
+        title: Infos utiles
+        entities:
+          - entity: sensor.guest_wifi_qr
+            name: 📶 Wi-Fi invité
+          - entity: sensor.wifi_password
+            name: 🔐 Mot de passe
+          - type: custom:button-card
+            name: 📞 Appeler l'hôte
+            icon: mdi:phone
+            tap_action:
+              action: call-service
+              service: notify.mobile_app_mon_telephone
+              service_data:
+                message: "Un invité a demandé de l’aide via le dashboard !"
+
+  - type: vertical-stack
+    cards:
+      - type: entities
+        title: Ambiances
+        entities:
+          - type: custom:button-card
+            name: 🌙 Mode détente
+            icon: mdi:lightbulb-night
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.mode_detente
+          - type: custom:button-card
+            name: 💡 Mode soirée
+            icon: mdi:party-popper
+            tap_action:
+              action: call-service
+              service: scene.turn_on
+              service_data:
+                entity_id: scene.mode_soiree
+
+      - type: media-control
+        entity: media_player.salon
+        name: 🎵 Musique
+
+      - type: custom:button-card
+        name: 🎧 Jazz chill
+        icon: mdi:music
+        tap_action:
+          action: call-service
+          service: media_player.play_media
+          service_data:
+            entity_id: media_player.salon
+            media_content_type: music
+            media_content_id: "spotify:playlist:37i9dQZF1DXbITWG1ZJKYt" # exemple
+
+  - type: vertical-stack
+    cards:
+      - type: custom:button-card
+        name: 📺 Lancer Netflix
+        icon: mdi:netflix
+        tap_action:
+          action: call-service
+          service: media_player.select_source
+          service_data:
+            entity_id: media_player.tv_salon
+            source: "Netflix"
+
+      - type: custom:button-card
+        name: ❓ Surprise !
+        icon: mdi:emoticon-excited
+        tap_action:
+          action: call-service
+          service: script.invite_surprise
+
+      - type: custom:button-card
+        name: 🎤 Karaoké Party
+        icon: mdi:microphone
+        tap_action:
+          action: call-service
+          service: script.karaoke_party
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+resources:
+  - url: /local/unused-card.js
+    type: module
+    
+  - url: /local/button-card.js
+    type: module
+    
+
+  - url: /hacsfiles/sidebar-card/sidebar-card.js
+    type: module
+    
+  - url: /local/banner-card.js?v=1
+    type: module
+    
+  - url: /local/honeycomb-menu.js
+    type: module
+    
+    
+    
