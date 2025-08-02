@@ -1,0 +1,24 @@
+title: Chez Régis Pailler !
+# order:
+#   - item: Carte
+#     hide: true
+#   - item: map
+#     hide: true
+exceptions:
+  
+  
+order:
+  
+  - item: overview
+    bottom: true
+  - item: carte
+    hide: false
+  - item: history
+    bottom: true
+  - item: logbook
+    bottom: true
+    
+  - new_item: true
+    item: Serveur Synology
+    href: https://regispailler.fr
+    icon: "mdi:server"
