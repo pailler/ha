@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carte Météo-France</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <style>
+        #map { height: 500px; width: 100%; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+
+    <script>
+        var map = L.map('map').setView([46.603354, 1.888334], 6);
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; OpenStreetMap contributors'
+        }).addTo(map);
+
+        L.tileLayer('https://public-api.meteofrance.fr/public/radar/{z}/{x}/{y}.png?api-key=eyJ4NXQiOiJZV0kxTTJZNE1qWTNOemsyTkRZeU5XTTRPV014TXpjek1UVmhNbU14T1RSa09ETXlOVEE0Tnc9PSIsImtpZCI6ImdhdGV3YXlfY2VydGlmaWNhdGVfYWxpYXMiLCJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJyZWdpc3BhaWxsZXJAY2FyYm9uLnN1cGVyIiwiYXBwbGljYXRpb24iOnsib3duZXIiOiJyZWdpc3BhaWxsZXIiLCJ0aWVyUXVvdGFUeXBlIjpudWxsLCJ0aWVyIjoiVW5saW1pdGVkIiwibmFtZSI6IkRlZmF1bHRBcHBsaWNhdGlvbiIsImlkIjoyNDA2MSwidXVpZCI6IjdmYTNmN2Y5LTI2ZWEtNDBmNi1iYTI1LTJhNGIwMmE5MGNkMSJ9LCJpc3MiOiJodHRwczpcL1wvcG9ydGFpbC1hcGkubWV0ZW9mcmFuY2UuZnI6NDQzXC9vYXV0aDJcL3Rva2VuIiwidGllckluZm8iOnsiNjBSZXFQYXJNaW4iOnsidGllclF1b3RhVHlwZSI6InJlcXVlc3RDb3VudCIsImdyYXBoUUxNYXhDb21wbGV4aXR5IjowLCJncmFwaFFMTWF4RGVwdGgiOjAsInN0b3BPblF1b3RhUmVhY2giOnRydWUsInNwaWtlQXJyZXN0TGltaXQiOjAsInNwaWtlQXJyZXN0VW5pdCI6InNlYyJ9fSwia2V5dHlwZSI6IlBST0RVQ1RJT04iLCJzdWJzY3JpYmVkQVBJcyI6W3sic3Vic2NyaWJlclRlbmFudERvbWFpbiI6ImNhcmJvbi5zdXBlciIsIm5hbWUiOiJEb25uZWVzUHVibGlxdWVzVmlnaWxhbmNlIiwiY29udGV4dCI6IlwvcHVibGljXC9EUFZpZ2lsYW5jZVwvdjEiLCJwdWJsaXNoZXIiOiJhZG1pbiIsInZlcnNpb24iOiJ2MSIsInN1YnNjcmlwdGlvblRpZXIiOiI2MFJlcVBhck1pbiJ9XSwiZXhwIjoxNzcwNzQxNTk0LCJ0b2tlbl90eXBlIjoiYXBpS2V5IiwiaWF0IjoxNzM5MjA1NTk0LCJqdGkiOiI4MGM2NDdjYS03MTRhLTQwYTAtODA3My01ZjE2ZDA2NGUyOTQifQ==.yLXiMTy9wR0sYzKxchTUBJlM_kDeh7UpCmjllUzUubM9YADPR4QqboUWA6GXmyf-hS4jzdiaHpgoioyHXDViMZE1ZVwLNH1PwYSCjyuVj8PM3E2F7hkTLhD1SK1oA7j6qQFMX6KGl0Ja5FjvO9YtmL00g8Hs1BEIK_qDB2xBMr156A5938eFv1NpSEKoylux3zZk2UfFla2NRWBmU1C2oKgwSDrQTAfHkQ-zD5DYXVxVv1xAcL-as_gTS4jFyXTTqwuyPIp4daB5d1kSnl3r4GwDCCrhCDa10pC6bOx-6s0yXVgYujvAnT_c3QB3A2KvcF3hZquShoVogtlWae3QtQ==
+', {
+            attribution: 'Données © Météo-France',
+            opacity: 0.5
+        }).addTo(map);
+    </script>
+</body>
+</html>

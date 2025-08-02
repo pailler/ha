@@ -1,0 +1,90 @@
+# fichier mameteo.yaml
+
+# Template ##########################################################
+template:
+  - sensor:
+    - name: rayonnement normalisé
+      # sensor.rayonnement_normalise
+      state: "{{ (state_attr('mameteo.data','raw') | from_json)['ray_glo01'] }}"
+      unit_of_measurement: "J/m2@6mn"
+
+# Automations #######################################################
+automation:
+  # Météo France - data 6mn
+  # interrogation de l'API de Météo France : données d'observation (6'), fréquence de modif : 6 minutes
+  - id: mameteo_data_6mn
+    alias: MaMétéo - data 6mn
+    description: 'interrogation de l''API de Météo France'
+    mode: single
+    trigger:
+      - platform: time_pattern
+        # toutes les 6 minutes
+        minutes: "/6"
+    condition: []
+    action:
+      - service: python_script.exec
+        data:
+          key: !secret mf_key_obs
+          title: Python inline
+          source: |
+            from datetime import datetime
+            import requests
+            import urllib.parse  
+
+            try:            
+              serveur = 'https://public-api.meteofrance.fr/public/DPObs/v1'
+              key = data.get("key", "")
+              service = '/station/infrahoraire-6m'
+              station = '74182001' # code de la station sélectionnée : Annecy Meythet
+              datage = datetime.utcnow().strftime("%Y-%m-%dT%H:%M:%SZ")     # en UTC
+            
+              url = serveur + service + '?id_station=' + station + '&date=' + urllib.parse.quote(datage) + '&format=json&apikey=' + urllib.parse.quote(key)
+              # print('url=', url)
+              r = requests.get(url)
+              rstr = str(r)
+              print(r)
+              if '<400>' in rstr:
+                hass.states.set('mameteo.data', '400: Contrôle de paramètres en erreur')
+              elif '<404>' in rstr:
+                hass.states.set('mameteo.data', '404: Jeu de données inexistant')
+              elif '<Response [200]>' in rstr:
+                print('analyse du json')
+                resp = r.json()[0]
+                print('resp=', resp)
+                # hass.states.set( 'mameteo.data', datetime.now().strftime("%d/%m/%Y %H:%M:%S"), { 'json': 'r' } )
+                datage = datetime.strftime( datetime.strptime(resp['reference_time'], '%Y-%m-%dT%H:%M:%SZ'), '%d/%m/%Y %H:%M:%S' )
+                hass.states.set( 'mameteo.data', datetime.now().strftime("%d/%m/%Y %H:%M:%S"), 
+                                  {
+                                    'raw': str(resp).replace('\'', '\"'),       # ainsi on peut faire : (state_attr('mameteo.data','raw') | from_json)['t']
+                                    'raw2': str(resp),
+                                    'reference_time': datage,                   # date and time of the production of the data in UTC
+                                    'temperature': resp['t']-273.15,            # air temperature at 2 meters above the ground in Kelvin degrees -> °C
+                                    'humidite': resp['u'],                      # hourly relative humidity at 2 meters 
+                                    'pression': resp['pres']/100,               # station pressure in Pa -> hPa 
+                                    'vent_direction': resp['dd'],               # mean wind direction at 10 meters above the ground in degrees
+                                    'vent_force': resp['ff']*3.6,               # mean wind speed at 10 meters above the ground in m/s -> km/h
+                                    'rafale_direction': resp['dxi10'],          # 10 minutes mean wind gust direction at 10 meters above the ground in degrees 
+                                    'rafale_force': resp['fxi10']*3.6,          # 10 minutes mean wind gust speed at 10 meters above the ground in m/s
+                                    'precipitation': resp['rr_per'],            # all precipitation over the previous 6 minutes in mm  
+                                    'puissance_solaire': resp['ray_glo01']/360, # global radiation over the previous 6 minutes in J/m² = Wh/m² pendant 6mn -> puissance solaire W/m²
+                                    'ensoleillement': resp['insolh'],           # sunshine duration over the previous 1H in min
+                                    'visibilite': resp['vv'],                   # horizontal visibility in meters 
+                                    'origine': 'Météo France, Données Observation 6mn'
+                                  })
+                hass.states.set( 'mameteo.reference_time',   datage,                 { 'unit_of_measurement': 'UTC' } )
+                hass.states.set( 'mameteo.temperature',      resp['t']-273.15,       { 'unit_of_measurement': '°C' } )
+                hass.states.set( 'mameteo.humidite',         resp['u'],              { 'unit_of_measurement': '%' } )
+                hass.states.set( 'mameteo.pression',         resp['pres']/100,       { 'unit_of_measurement': 'hPa' } )
+                hass.states.set( 'mameteo.vent_direction',   resp['dd'],             { 'unit_of_measurement': '°' } )
+                hass.states.set( 'mameteo.vent_force',       resp['ff']*3.6,         { 'unit_of_measurement': 'km/h' } )
+                hass.states.set( 'mameteo.rafale_direction', resp['dxi10'],          { 'unit_of_measurement': '°' } )
+                hass.states.set( 'mameteo.rafale_force',     resp['fxi10']*3.6,      { 'unit_of_measurement': 'km/h' } )
+                hass.states.set( 'mameteo.precipitation',    resp['rr_per'],         { 'unit_of_measurement': 'mm/1h' } )
+                hass.states.set( 'mameteo.puissance_solaire',resp['ray_glo01']/360,  { 'unit_of_measurement': 'W/m²' } )
+                hass.states.set( 'mameteo.ensoleillement',   resp['insolh'],         { 'unit_of_measurement': 'mn' } )
+                hass.states.set( 'mameteo.visibilite',       resp['vv'],             { 'unit_of_measurement': 'm' } )
+              else:
+                hass.states.set('mameteo.data', 'erreur non définie: ' + rstr)
+            except Exception as e:
+                print(f'exception: {e=}')
+            print('automation.mameteo_data_6mn: terminé')
